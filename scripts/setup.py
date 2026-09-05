@@ -665,6 +665,14 @@ def resolve(args: argparse.Namespace) -> dict[str, Any]:
     )
     validate_config(effective, "effective configuration", complete=True)
     statuses = route_status(effective, state.capabilities)
+    if args.compact:
+        return {
+            **{key: effective[key] for key in ("preset", "max_workers", "model_fallback", "browser")},
+            "route_status": {
+                role: {key: route[key] for key in ("agent_name", "model", "reasoning_effort", "status", "confirmed")}
+                for role, route in statuses.items()
+            },
+        }
     return build_result(effective, statuses, state.paths, state.capabilities)
 
 
@@ -778,6 +786,7 @@ def parser() -> argparse.ArgumentParser:
     for command in ("resolve", "validate"):
         child = commands.add_parser(command)
         add_common_arguments(child)
+        child.add_argument("--compact", action="store_true", help="emit execution settings without duplicate configuration or paths")
     apply_parser = commands.add_parser("apply")
     add_common_arguments(apply_parser)
     apply_parser.add_argument(

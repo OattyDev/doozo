@@ -75,6 +75,16 @@ class SetupCliTests(unittest.TestCase):
             names.add(name)
         self.assertEqual(len(names), 5)
 
+    def test_compact_resolution_preserves_execution_settings(self) -> None:
+        full = self.output("resolve")
+        compact = self.output("resolve", "--compact")
+        for key in ("preset", "max_workers", "model_fallback", "browser"):
+            self.assertEqual(compact[key], full["effective"][key])
+        for role, route in compact["route_status"].items():
+            for key, value in route.items():
+                self.assertEqual(value, full["route_status"][role][key])
+        self.assertLess(len(json.dumps(compact)), len(json.dumps(full)))
+
     def test_parent_directory_alias_cannot_overwrite_config_with_agent(self) -> None:
         self.agents_dir.mkdir(parents=True)
         alias = self.root / "alias"

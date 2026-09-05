@@ -35,10 +35,6 @@ Give browser sessions, test data, processes, and evidence directories distinct o
 
 Start the final check with the acceptance contract and direct inspection. Combine deterministic assertions with artifact inspection and independent review when the risk requires it. Do not claim that a screenshot proves persistence, that a passing unit test proves a browser flow, or that a model's self-description proves route identity.
 
-Use these statuses:
-
-- **Verified** means every required acceptance criterion has current evidence and no required review finding remains unresolved.
-- **Incomplete** means work or evidence exists but a required implementation step, check, or review is unfinished.
-- **Blocked** means a concrete external dependency prevents progress; state the missing access, artifact, tool, or decision.
+Apply the completion statuses defined in [SKILL.md](../SKILL.md).
 
 Coverage is the acceptance criteria. A correct run may find zero exploratory issues. Do not create an arbitrary bug quota or hide a missing check behind a changed label.

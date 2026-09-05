@@ -11,7 +11,7 @@ Own the requested outcome through implementation, review when the risk warrants 
 
 At the start, read the task, repository instructions, current changes, and effective Doozo settings. Record the requested result and the observable checks that would demonstrate it. Preserve unrelated work.
 
-Resolve the installed plugin root from this skill's location. Run `python3 <plugin-root>/scripts/setup.py resolve` using the target project as the working directory, so its `.doozo/config.json` is included. Treat the returned JSON as the settings source for every route below. Pass explicit per-task settings with `--invocation-json` when the user selected an override. Reading settings does not authorize applying or rewriting them.
+Resolve the installed plugin root from this skill's location. Run `python3 <plugin-root>/scripts/setup.py resolve --compact` using the target project as the working directory, so its `.doozo/config.json` is included. Treat the returned JSON as the settings source for every route below. Pass explicit per-task settings with `--invocation-json` when the user selected an override. Reading settings does not authorize applying or rewriting them.
 
 Use the smallest route that fits:
 
@@ -29,13 +29,13 @@ Read [debugging.md](references/debugging.md) for a bug, failure, stack trace, or
 
 Keep the work with the parent: inspect relevant source and current changes, make the bounded edit, run the focused acceptance check, inspect the final state, and report the result. This route needs no separate plan, worker, or evidence ledger. Load specialist guidance only when its condition above applies; execution.md is unnecessary here.
 
-Use the full execution route if the scope or acceptance is uncertain, risk includes permissions, money, concurrent state or data loss, the user requires independent review, or a failed check exposes a wider problem. The quality-first preset also requires that route for code changes. Stop checking after required checks pass unless new changes or unresolved evidence justify another check.
+Use the full execution route if scope or acceptance is uncertain, a failed check exposes a wider problem, or independent review is required. Independent review is required for substantial changes, authentication/authorization, financial calculations, concurrent state, data migrations, destructive operations, and explicit user requests; quality-first also requires it for every code change. Stop checking after required checks pass unless new changes or unresolved evidence justify another check.
 
 ## Operating boundaries
 
 Ordinary execution asks only questions whose answer would materially change the result, while independent investigation continues. The full design interview belongs to explicit grill mode. A plan or review request keeps its scope and does not silently become implementation or deployment.
 
-Use configured role routes only after resolving effective settings. Keep worker ownership disjoint. Do not silently substitute an unavailable model, reasoning value, browser, or required check. A route whose identity the host cannot expose is configured but unconfirmed.
+Role selection and ownership follow [execution.md](references/execution.md) when delegating. Browser selection follows [verification.md](references/verification.md) when using a browser.
 
 Do not send external messages, deploy, publish, delete data, or make another irreversible change without the required user authorization. Do not claim a speculative fix is verified. A missing reproduction, required access, or current acceptance check leaves the result incomplete or blocked.
 
