@@ -58,7 +58,8 @@ def prepare_doc(root: Path) -> None:
 
 def grade_doc(root: Path, baseline: str, final: str) -> dict[str, bool]:
     expected = '# Importing\n\nImports that duplicate an existing record are skipped.\n\n## Limits\n\nFiles contain at most 100 rows.\n'
-    return {'requested_document_text': (root / 'docs/guide.md').read_text() == expected, 'focused_change': changed(root, baseline) == {'docs/guide.md'}}
+    paths = changed(root, baseline)
+    return {'requested_document_text': (root / 'docs/guide.md').read_text() == expected, 'focused_change': 'docs/guide.md' in paths and all(path == 'docs/guide.md' or path.startswith('evidence/') for path in paths)}
 
 
 def prepare_slug(root: Path) -> None:

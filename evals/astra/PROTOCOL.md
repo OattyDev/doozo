@@ -1,8 +1,18 @@
-# Doozo v0.2 Astra comparison — protocol 1
+# Doozo v0.2 Astra comparison — protocol 2
 
 Defined before changing the plugin implementation. Historical Luna runs are
 baseline observations only; neither their selected reruns nor their timings
 decide whether v0.2 improves Astra.
+
+Protocol 2 corrects one independently confirmed doc-grader defect: the common
+prompt permits fixture evidence, but protocol 1 rejected the added evidence file.
+Allow new evidence files under `evidence/`, whether committed or untracked; retain
+the exact requested document and reject changes to other supplied files. Keep
+all six started protocol-1 doc attempts and their original grading untouched.
+The affected matched block is invalidated by a separate record and rerun in full.
+No other task grader, acceptance gate, or measurement formula changes. Source
+review also restored existing review/preset rules in candidate revision 2 before
+the replacement matrix; its snapshot hash distinguishes it from revision 1.
 
 ## Question and arms
 

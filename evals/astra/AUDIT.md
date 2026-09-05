@@ -1,4 +1,4 @@
-# Frozen trace audit rubric — protocol 1
+# Frozen trace audit rubric — protocol 2
 
 Audit each retained initial attempt independently of its implementer. Read the
 task, initial/final artifact, immutable grader output, parent events, and child
