@@ -1,16 +1,16 @@
 {
-  "protocol_version": 2,
-  "frozen_at_utc": "2026-09-05T07:34:42.947926+00:00",
+  "protocol_version": 3,
+  "frozen_at_utc": "2026-09-05T07:38:18.755187+00:00",
   "plugin_baseline_commit": "a1d09a28ff631defd3d0445d18dc45bfdc52d885",
-  "benchmark_sha256": "d9e7a4dc7d5732614f613cf1dd876bd177ab850ae34983b26fd6e6d023011e8b",
+  "benchmark_sha256": "68acb1de75214604bf4aad10394b14b076df32b613d93c27faf80efaf4d16e6d",
   "files": {
-    "evals/astra/PROTOCOL.md": "0403ce4c106f544782be6d754ca98d1ca28d5efa862533f396a75a5d0949f472",
-    "evals/astra/AUDIT.md": "dc63a05af378eb773c523df7aa0ba89daef8ec1b19df4e325cafaa02737243b6",
+    "evals/astra/PROTOCOL.md": "92274aaf17f067f141964805c38a05f20f8c1bffb00e2811a94e36819e7af13d",
+    "evals/astra/AUDIT.md": "787b50e9dc7acff1c7776188a8b61976e0f4ad66270c70d661083ae47d2311d0",
     "evals/astra_benchmark.py": "a1156165a1d3cd997a065550046a26223e5a24e5586266ff954e2f209e94847f",
-    "evals/astra_tasks.py": "2c395fb72ed2cf39f536abab654bd9a12cf76cfc468fdcb8e45902797a14e1b7",
+    "evals/astra_tasks.py": "5541682a689ba3a95a81a98b19c51addee82aca635ab9419f70c7f68dcdd6034",
     "evals/astra_telemetry.py": "5ee1136fab678e115286a0a5a4bc7d303dcd1ca71bfbc25a11af79d3b5ae16ee",
     "evals/test_astra_benchmark.py": "7ed31d97381241d6c15d06cf23350ab14f61a86b3bdcd0fad095d65f4cca0dc2",
-    "evals/test_astra_tasks.py": "48f944d2e0e3539efbb5f10d62d5abf6876c09caceb228a08147ce0bf9ac8fbd",
+    "evals/test_astra_tasks.py": "30a7c2bfcce25f2aafc4986cab2ceaf2c1514d232a6eabb540d1800fea314478",
     "evals/test_astra_telemetry.py": "e984de4b20b023cb7eb0ae534cc2c3fa2f2bc6909f8dbe2090c0895e394f1746"
   },
   "runtime": "codex-cli 0.153.0",

@@ -8,17 +8,18 @@ from astra_tasks import CASE_BY_ID, protected_tests
 
 
 class FrozenGraderTests(unittest.TestCase):
-    def test_document_evidence_is_allowed_but_unrelated_changes_are_not(self):
+    def test_document_evidence_filename_is_not_a_hidden_requirement(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp);case=CASE_BY_ID['doc-correction'];case.prepare(root);baseline=init_repo(root)
             doc=root/'docs/guide.md';doc.write_text(doc.read_text().replace('stop the import.', 'are skipped.'))
             (root/'evidence').mkdir();(root/'evidence/check.txt').write_text('Inspected corrected document.\n')
+            (root/'doc-correction-evidence.txt').write_text('Inspected corrected document.\n')
             self.assertTrue(all(case.grade(root,baseline,'').values()))
             subprocess.run(['git','add','-A'],cwd=root,check=True,capture_output=True)
             subprocess.run(['git','commit','-qm','document and evidence'],cwd=root,check=True,capture_output=True)
             self.assertTrue(all(case.grade(root,baseline,'').values()))
-            (root/'unrelated.txt').write_text('unrequested')
-            self.assertFalse(case.grade(root,baseline,'')['focused_change'])
+            (root/'.gitignore').write_text('unrequested change to supplied file')
+            self.assertFalse(case.grade(root,baseline,'')['supplied_files_preserved'])
 
     def test_original_failures_and_valid_outcomes(self):
         fixes = {

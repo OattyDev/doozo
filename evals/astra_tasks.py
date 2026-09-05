@@ -59,7 +59,10 @@ def prepare_doc(root: Path) -> None:
 def grade_doc(root: Path, baseline: str, final: str) -> dict[str, bool]:
     expected = '# Importing\n\nImports that duplicate an existing record are skipped.\n\n## Limits\n\nFiles contain at most 100 rows.\n'
     paths = changed(root, baseline)
-    return {'requested_document_text': (root / 'docs/guide.md').read_text() == expected, 'focused_change': 'docs/guide.md' in paths and all(path == 'docs/guide.md' or path.startswith('evidence/') for path in paths)}
+    supplied = set(subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', baseline], cwd=root, text=True).splitlines())
+    # The prompt permits evidence without prescribing its filename. Scope of
+    # added artifacts is a semantic audit; protect every other supplied file.
+    return {'requested_document_text': (root / 'docs/guide.md').read_text() == expected, 'supplied_files_preserved': paths & supplied == {'docs/guide.md'}}
 
 
 def prepare_slug(root: Path) -> None:

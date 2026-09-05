@@ -1,4 +1,4 @@
-# Doozo v0.2 Astra comparison — protocol 2
+# Doozo v0.2 Astra comparison — protocol 3
 
 Defined before changing the plugin implementation. Historical Luna runs are
 baseline observations only; neither their selected reruns nor their timings
@@ -13,6 +13,14 @@ The affected matched block is invalidated by a separate record and rerun in full
 No other task grader, acceptance gate, or measurement formula changes. Source
 review also restored existing review/preset rules in candidate revision 2 before
 the replacement matrix; its snapshot hash distinguishes it from revision 1.
+
+Protocol 3 removes the remaining filename assumption from that same correction.
+Protocol 2 still rejected plain Astra's `doc-correction-evidence.txt`, although
+the prompt never prescribed `evidence/`. The automatic doc grader now protects
+all supplied files and checks the exact requested text; the frozen semantic
+audit judges whether added artifacts are legitimate evidence or scope expansion.
+Both started protocol-2 attempts remain untouched and invalidated separately.
+Rerun the full block. Other tasks, conditions, and acceptance gates remain fixed.
 
 ## Question and arms
 
