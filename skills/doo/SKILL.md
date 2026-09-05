@@ -15,7 +15,8 @@ Resolve the installed plugin root from this skill's location. Run `python3 <plug
 
 Use the smallest route that fits:
 
-- Ordinary doo execution reads [execution.md](references/execution.md), then applies the relevant specialist reference.
+- For a small, low-risk task with clear acceptance criteria, known edit scope, and a focused check, use the fast path below.
+- Other ordinary execution reads [execution.md](references/execution.md), then applies the relevant specialist reference.
 - doo plan reads [design.md](references/design.md) and returns a design with acceptance checks. Stop before implementation until the user asks to proceed.
 - doo grill reads [design.md](references/design.md) and runs the full dependency-aware interview. Investigate facts yourself, ask the frontier in rounds with recommendations, and wait for the user's confirmation before implementation.
 - doo review reads [review.md](references/review.md) and reviews the requested baseline or working tree without silently implementing findings.
@@ -23,6 +24,12 @@ Use the smallest route that fits:
 - doo resume reads [execution.md](references/execution.md) and [verification.md](references/verification.md), loads the saved checkpoint and evidence, rechecks live state, then continues.
 
 Read [debugging.md](references/debugging.md) for a bug, failure, stack trace, or request to diagnose. Read [design.md](references/design.md) when terminology, state transitions, interfaces, or a consequential design choice needs work. Read [review.md](references/review.md) for a fresh correctness review. Read [verification.md](references/verification.md) when the result is a user flow, API, CLI, download, screenshot, or other artifact.
+
+## Fast path
+
+Keep the work with the parent: inspect relevant source and current changes, make the bounded edit, run the focused acceptance check, inspect the final state, and report the result. This route needs no separate plan, worker, or evidence ledger. Load specialist guidance only when its condition above applies; execution.md is unnecessary here.
+
+Use the full execution route if the scope or acceptance is uncertain, risk includes permissions, money, concurrent state or data loss, the user requires independent review, or a failed check exposes a wider problem. The quality-first preset also requires that route for code changes. Stop checking after required checks pass unless new changes or unresolved evidence justify another check.
 
 ## Operating boundaries
 
