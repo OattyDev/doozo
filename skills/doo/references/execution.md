@@ -4,7 +4,7 @@ Use the acceptance criteria, settings, route selection, review triggers, and com
 
 ## Choose the work
 
-Adaptive matches worker count and review depth to scope and risk. Quality-first requests independent review for every code change. Budget-first keeps small tasks local and escalates to the configured complex role when failure or ambiguity evidence warrants it. Presets change workflow preferences, not the model roster or acceptance criteria.
+Adaptive matches worker count and review depth to scope and risk. Quality-first requests independent review for every code change and prefers the strongest configured routes when a worker is warranted. Budget-first keeps small tasks local, prefers configured lower-cost routes when delegating, and escalates to the configured complex role when failure or ambiguity evidence warrants it. Presets change workflow preferences, not the model roster or acceptance criteria.
 
 Follow the relevant entry point, callers, data shape, state transitions, and tests before editing. Reuse repository conventions, existing modules, standard-library and platform features. Choose the smallest design that satisfies the request without weakening existing checks. Resolve environment facts directly; ask about product decisions only when they materially change the result.
 

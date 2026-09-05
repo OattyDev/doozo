@@ -29,7 +29,7 @@ Read [debugging.md](references/debugging.md) for a bug, failure, stack trace, or
 
 Keep the work with the parent: inspect relevant source and current changes, make the bounded edit, run the focused acceptance check, inspect the final state, and report the result. This route needs no separate plan, worker, or evidence ledger. Load specialist guidance only when its condition above applies; execution.md is unnecessary here.
 
-Use the full execution route if scope or acceptance is uncertain, a failed check exposes a wider problem, or independent review is required. Independent review is required for substantial changes, authentication/authorization, financial calculations, concurrent state, data migrations, destructive operations, and explicit user requests; quality-first also requires it for every code change. Stop checking after required checks pass unless new changes or unresolved evidence justify another check.
+Use the full execution route if scope or acceptance is uncertain, a failed check exposes a wider problem, or independent review is required. Independent review is required for substantial changes, authentication/authorization, financial calculations, concurrent state, data migrations, destructive operations, other high-consequence behavior, and explicit user requests; quality-first also requires it for every code change. Stop checking after required checks pass unless new changes or unresolved evidence justify another check.
 
 ## Operating boundaries
 
