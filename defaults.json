@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "preset": "adaptive",
+  "max_workers": 2,
+  "model_fallback": "disabled",
+  "browser": {
+    "preferred": "agent-browser",
+    "fallback": null
+  },
+  "roles": {
+    "orchestrator": {
+      "model": "inherit",
+      "reasoning_effort": "inherit"
+    },
+    "scout": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium"
+    },
+    "implementer": {
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "max"
+    },
+    "complex-implementer": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "max"
+    },
+    "reviewer": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "high"
+    },
+    "browser": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium"
+    }
+  }
+}

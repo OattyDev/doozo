@@ -1,0 +1,23 @@
+{
+  "name": "doozo",
+  "version": "0.1.0+codex.20260905054225",
+  "description": "Plan, implement, review, and verify tasks with adaptive Codex agents.",
+  "author": {
+    "name": "kyoroz"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Doozo",
+    "shortDescription": "Finish tasks with configurable agents and evidence.",
+    "longDescription": "Doozo combines focused implementation, scientific debugging, design interviews, fresh review, and browser verification. Configure role models with setup-doo.",
+    "developerName": "kyoroz",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use $doo to complete this task and verify the result.",
+      "Use $setup-doo to configure my agent models."
+    ]
+  }
+}
