@@ -1,0 +1,19 @@
+{
+  "protocol_version": 1,
+  "frozen_at_utc": "2026-09-05T07:23:34.211816+00:00",
+  "plugin_baseline_commit": "a1d09a28ff631defd3d0445d18dc45bfdc52d885",
+  "benchmark_sha256": "287c3e660852769ffda7a49849310a2ddbcd9d921d5dc0608834ffc139f80e28",
+  "files": {
+    "evals/astra/PROTOCOL.md": "dca8825459372ffccee58287d557c75cb6926716458fb5d24bd0d2f1dfb223c3",
+    "evals/astra/AUDIT.md": "74812fff83d2228df6367ced4d805c9c4035a9bcf205c380684c34bc625b863a",
+    "evals/astra_benchmark.py": "a1156165a1d3cd997a065550046a26223e5a24e5586266ff954e2f209e94847f",
+    "evals/astra_tasks.py": "c41a97e9345e6723ffd2f078204c71416cd461fba619b1fa95b30b4fe445d6db",
+    "evals/astra_telemetry.py": "5ee1136fab678e115286a0a5a4bc7d303dcd1ca71bfbc25a11af79d3b5ae16ee",
+    "evals/test_astra_benchmark.py": "7ed31d97381241d6c15d06cf23350ab14f61a86b3bdcd0fad095d65f4cca0dc2",
+    "evals/test_astra_tasks.py": "d95131813cd49d68b68d73f09b93d2dd8d7dfc487cf131b81a2dccbbbf5f355f",
+    "evals/test_astra_telemetry.py": "e984de4b20b023cb7eb0ae534cc2c3fa2f2bc6909f8dbe2090c0895e394f1746"
+  },
+  "runtime": "codex-cli 0.153.0",
+  "parent_model": "gpt-6-astra",
+  "parent_effort": "medium"
+}
