@@ -9,6 +9,11 @@ from pathlib import Path
 def summarize(run):
     rows = [json.loads(line) for line in (run / 'results.jsonl').read_text().splitlines()]
     audits = {}
+    supplemental = {}
+    for path in (run / 'audits').glob('*-telemetry.json'):
+        value = json.loads(path.read_text())
+        if value.get('kind') == 'supplemental_token_accounting' and value.get('adjudication') == 'supported' and value.get('aggregate', {}).get('coverage') == 'complete':
+            supplemental[str(Path(value['source_result']).resolve())] = (value, path)
     for case in {row['case'] for row in rows}:
         base = run / 'audits' / (case + '.json')
         adjudicated = run / 'audits' / (case + '-adjudication.json')
@@ -26,6 +31,9 @@ def summarize(run):
         seen.add(key)
         result_path = str((Path(row['artifacts']['final']).parent / 'result.json').resolve())
         row = {**row, 'audit': audits.get(result_path)}
+        if row.get('total_token_usage') is None and result_path in supplemental:
+            value, path = supplemental[result_path]
+            row = {**row, 'original_total_token_usage': None, 'total_token_usage': value['aggregate']['total_token_usage'], 'supplemental_accounting': str(path)}
         arms.setdefault(row['arm'], []).append(row)
     summary = {}
     for arm, records in arms.items():
@@ -34,7 +42,9 @@ def summarize(run):
         summary[arm] = {
             'attempts': len(records),
             'audited': sum(row['audit'] is not None for row in records),
-            'first_pass_successes': sum(row['audit'].get('first_pass_correct') is True for row in records if row['audit']),
+            'first_pass_successes': sum(row['status'] == 'deterministic_pass' and row['audit'].get('first_pass_correct') is True for row in records if row['audit']),
+            'invalid_timing_or_measurement': sum(row['audit'].get('measurement_valid') is False for row in records if row['audit']),
+            'supplemental_accounting_count': sum('supplemental_accounting' in row for row in records),
             'deterministic_failures': sum(row['status'] != 'deterministic_pass' for row in records),
             'tokens_all_attempts': sum(row['total_token_usage'] for row in records) if token_complete else None,
             'seconds_all_attempts': sum(row['elapsed_seconds'] for row in records),
@@ -57,7 +67,7 @@ def summarize(run):
         if not all(row.get('audit') and row['audit'].get('first_pass_correct') is True and row['audit'].get('measurement_valid') is True for row in (candidate,baseline)): continue
         tokens = candidate.get('total_token_usage'); old_tokens = baseline.get('total_token_usage')
         pairs.append({'case':candidate['case'],'repeat':candidate['repeat'], 'token_ratio':tokens/old_tokens if tokens is not None and old_tokens else None,'time_ratio':candidate['elapsed_seconds']/baseline['elapsed_seconds']})
-    return {'run':str(run),'arms':summary,'mutually_correct_pairs':pairs,'paired_median_token_ratio':statistics.median(p['token_ratio'] for p in pairs) if pairs and all(p['token_ratio'] is not None for p in pairs) else None,'paired_median_time_ratio':statistics.median(p['time_ratio'] for p in pairs) if pairs else None,'note':'Pending audits, missing usage, and unrun attempts prevent acceptance. Diagnostic and invalidated runs must be reported separately.'}
+    return {'run':str(run),'arms':summary,'mutually_correct_pairs':pairs,'paired_median_token_ratio':statistics.median(p['token_ratio'] for p in pairs) if pairs and all(p['token_ratio'] is not None for p in pairs) else None,'paired_median_time_ratio':statistics.median(p['time_ratio'] for p in pairs) if pairs else None,'note':'Check audited/attempt counts, unknown usage, and invalid measurement fields before drawing conclusions. Diagnostic and invalidated runs are reported separately.'}
 
 
 if __name__ == '__main__':
