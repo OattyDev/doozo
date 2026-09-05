@@ -31,8 +31,16 @@ def package(root: Path, output: Path) -> Path:
     files = set(root / p for p in required)
     for directory in [".codex-plugin", "skills", "scripts", "licenses"]:
         for path in (root / directory).rglob("*"):
-            if path.is_file() and "__pycache__" not in path.parts and path.suffix in {".md", ".yaml", ".yml", ".json", ".py", ".txt"}:
+            if path.is_file() and "__pycache__" not in path.parts and path.suffix in {".md", ".yaml", ".yml", ".json", ".py", ".txt", ".png"}:
                 files.add(path)
+    interface = manifest.get("interface", {})
+    assets = [interface.get(key) for key in ("composerIcon", "logo", "logoDark")]
+    assets.extend(interface.get("screenshots", []))
+    for relative in filter(None, assets):
+        path = root / relative
+        if not path.is_file():
+            raise ValueError(f"Missing declared image: {relative}")
+        files.add(path)
     for path in files:
         if path.is_symlink() or not path.resolve().is_relative_to(root.resolve()):
             raise ValueError(f"Package source escapes plugin: {path}")

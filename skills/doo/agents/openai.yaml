@@ -1,5 +1,7 @@
 interface:
   display_name: "Doo"
+  icon_small: "./assets/logo.png"
+  icon_large: "./assets/logo.png"
   short_description: "Run tasks through evidence-backed verification"
   default_prompt: "Use $doo to carry this repository task through implementation and evidence-backed verification."
 policy:

@@ -1,5 +1,9 @@
 # Doozo
 
+<p align="center">
+  <img src="assets/doozo-buddy.png" alt="Doozo Buddy mascot" width="280">
+</p>
+
 Doozo is a Codex plugin for completing repository tasks with configurable agents and evidence. Small tasks stay with the lead. Larger tasks can use scoped workers and a fresh reviewer. Browser work includes real interaction and inspected screenshots.
 
 ## Use it

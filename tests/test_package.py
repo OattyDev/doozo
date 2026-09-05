@@ -51,6 +51,25 @@ class PackageTests(unittest.TestCase):
                 module.package(root, archive)
             self.assertEqual(archive.read_bytes(), b"keep")
 
+    def test_declared_logo_and_skill_icons_are_packaged_without_drafts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source"
+            self.fixture(root)
+            payload = b"selected-image-bytes"
+            for relative in ["assets/doozo-buddy.png", "skills/doo/assets/logo.png", "assets/logo-options/draft.png"]:
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(payload)
+            manifest_path = root / ".codex-plugin/plugin.json"
+            manifest = json.loads(manifest_path.read_text())
+            manifest["interface"] = {"logo": "./assets/doozo-buddy.png", "composerIcon": "./assets/doozo-buddy.png"}
+            manifest_path.write_text(json.dumps(manifest))
+            with zipfile.ZipFile(module.package(root, Path(directory) / "bundle.zip")) as archive:
+                prefix = "doozo-marketplace/plugins/doozo/"
+                self.assertEqual(archive.read(prefix + "assets/doozo-buddy.png"), payload)
+                self.assertEqual(archive.read(prefix + "skills/doo/assets/logo.png"), payload)
+                self.assertFalse(any("logo-options" in name for name in archive.namelist()))
+
     def test_required_file_symlink_is_rejected_before_archive_creation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "source"

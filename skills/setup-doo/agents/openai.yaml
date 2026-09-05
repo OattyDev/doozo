@@ -1,5 +1,7 @@
 interface:
   display_name: "Setup Doo"
+  icon_small: "./assets/logo.png"
+  icon_large: "./assets/logo.png"
   short_description: "Configure Doozo role routing and verification"
   default_prompt: "Use $setup-doo to configure Doozo role routes, models, reasoning, and verification settings."
 policy:

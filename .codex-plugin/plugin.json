@@ -1,6 +1,6 @@
 {
   "name": "doozo",
-  "version": "0.1.0+codex.20260905054225",
+  "version": "0.1.0+codex.20260905064039",
   "description": "Plan, implement, review, and verify tasks with adaptive Codex agents.",
   "author": {
     "name": "kyoroz"
@@ -18,6 +18,8 @@
     "defaultPrompt": [
       "Use $doo to complete this task and verify the result.",
       "Use $setup-doo to configure my agent models."
-    ]
+    ],
+    "composerIcon": "./assets/doozo-buddy.png",
+    "logo": "./assets/doozo-buddy.png"
   }
 }
