@@ -10,9 +10,13 @@ Follow the relevant entry point, callers, data shape, state transitions, and tes
 
 ## Delegate by ownership
 
+Keep work local unless a child has an independent bounded scope that can run alongside useful parent work, or an independent review is required. A file count alone does not justify delegation. Skip a scout when the relevant path is already known. Sequential handoffs with no parallel benefit usually add time; assign a difficult isolated scope only when its specialist route is worth that cost. No fixed scout/worker/reviewer procession is required.
+
 For implementation roles with `reasoning_policy: adaptive`, use the concrete effort returned by setup. Start with its bounded-task route. For difficult coupled logic, a complex implementation scope, or evidence that the initial approach cannot resolve the problem, resolve again with `--task-complexity complex --compact` before dispatch. The helper owns the effort mapping; fixed user/project/invocation efforts remain fixed. This selects a fresh worker route, not a change to the active parent's reasoning. Escalate because of unresolved evidence, not merely because a command failed.
 
 When a worker earns its cost, give it exact paths or modules, permitted actions, acceptance criteria, dependencies, and required checks. Available responsibilities are scout (read-only exploration), implementer (bounded changes), complex implementer (difficult isolated work), reviewer (read-only correctness), and browser verifier (live-flow evidence without application edits).
+
+Send only the task, relevant raw evidence, and owned paths the worker needs. State that other agents may edit the repository, their changes must be preserved, and further delegation needs an explicit assignment. Keep integration decisions and the final acceptance check with the parent. Return findings and observed checks, not another plan for the parent to restart.
 
 Use each `route_status[role].agent_name` from setup as the exact custom agent type. Generic host roles with similar names are different routes. If the named type is unavailable or its settings differ from the effective route, use a fresh explicit model-and-reasoning route only when supported and preserving that role's instructions and permissions. Otherwise report the unavailable route. The orchestrator has no child role.
 

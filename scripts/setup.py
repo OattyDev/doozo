@@ -426,6 +426,7 @@ def rendered_agent_payload(role_name: str, route: dict[str, Any]) -> str:
             "",
             'developer_instructions = """',
             instructions,
+            "Other agents may edit the repository. Preserve their changes and stay in your assigned scope. Do not delegate further unless the parent explicitly assigns that responsibility.",
             '"""',
             "",
         )
