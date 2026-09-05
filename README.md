@@ -101,6 +101,6 @@ python3 evals/run.py --list
 
 The behavioral evaluations make real model calls when run. They use isolated fixtures and store results outside the source tree. Inspect their individual outcomes and retained artifacts rather than treating process exit as task success. Read `evals/README.md` before running them.
 
-Changes to source files do not update an already cached plugin installation. Rebuild the archive with a new manifest version or development cachebuster, refresh the marketplace using Codex, reinstall, and test in a new task. Preserve the original source checkout as the place to edit.
+Develop unpromoted candidates in a worktree that is not registered as the installed marketplace source. This host refreshed a local plugin cache from changed source metadata during verification, so check the installed version instead of assuming it stayed pinned. For a deliberate update, use the supported version/cachebuster and reinstall flow, then verify it in a new task. Keep the registered source on the version you intend to run.
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for attribution and [provenance.json](provenance.json) for inspected source hashes. The complete source workflows are not loaded on every task.
