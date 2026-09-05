@@ -6,6 +6,12 @@
 
 Doozo is a Codex plugin for completing repository tasks with configurable agents and evidence. Small tasks stay with the lead. Larger tasks can use scoped workers and a fresh reviewer. Browser work includes real interaction and inspected screenshots.
 
+## v0.2 candidate
+
+The candidate adds a direct path for small tasks, compact settings, adaptive implementation effort, selective delegation, and proportional debugging. Existing explicit user/project effort settings stay fixed; upgrading the plugin alone does not change saved model choices. Use `setup-doo` to select the adaptive implementation policy when desired. The active parent model and reasoning remain host-controlled.
+
+The Astra comparison is defined in [the frozen protocol](evals/astra/PROTOCOL.md), with a separate [trace audit rubric](evals/astra/AUDIT.md). Runtime claims require the measured results; the release-candidate label does not claim that it outperforms plain Astra or v0.1.
+
 ## Use it
 
 Start a new Codex task after installing the plugin. Select the `doo` or `setup-doo` skill from the picker, or invoke it explicitly:

@@ -1,6 +1,6 @@
 {
   "name": "doozo",
-  "version": "0.1.0+codex.20260905064039",
+  "version": "0.2.0-rc.1",
   "description": "Plan, implement, review, and verify tasks with adaptive Codex agents.",
   "author": {
     "name": "kyoroz"
