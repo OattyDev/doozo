@@ -85,6 +85,28 @@ class SetupCliTests(unittest.TestCase):
                 self.assertEqual(value, full["route_status"][role][key])
         self.assertLess(len(json.dumps(compact)), len(json.dumps(full)))
 
+    def test_adaptive_effort_materializes_without_overwriting_fixed_choices(self) -> None:
+        applied = self.output("apply")
+        self.assertEqual(applied["effective"]["roles"]["implementer"]["reasoning_effort"], "adaptive")
+        agent = self.agents_dir / "doo-implementer.toml"
+        before = agent.read_bytes()
+        self.assertIn(b'model_reasoning_effort = "medium"', before)
+        complex_task = self.output("resolve", "--compact", "--task-complexity", "complex")
+        self.assertEqual(complex_task["route_status"]["implementer"]["reasoning_effort"], "high")
+        self.assertEqual(agent.read_bytes(), before)
+        self.write_json(self.project_config, {"roles": {"implementer": {"reasoning_effort": "max"}}})
+        fixed = self.output("resolve", "--task-complexity", "complex")
+        self.assertEqual(fixed["route_status"]["implementer"]["reasoning_effort"], "max")
+        self.assertEqual(fixed["route_status"]["implementer"]["reasoning_policy"], "fixed")
+        override = self.output("resolve", "--task-complexity", "complex", "--invocation-json", '{"roles":{"implementer":{"reasoning_effort":"low"}}}')
+        self.assertEqual(override["route_status"]["implementer"]["reasoning_effort"], "low")
+
+    def test_adaptive_effort_requires_supported_concrete_route(self) -> None:
+        capabilities = json.dumps({"models": {"gpt-5.6-terra": ["medium", "high"], "gpt-5.6-luna": ["medium"], "gpt-5.6-sol": ["high"]}})
+        self.output("validate", "--capabilities-json", capabilities)
+        self.run_cli("validate", "--task-complexity", "complex", "--capabilities-json", capabilities, expect=2)
+        self.run_cli("validate", "--invocation-json", '{"roles":{"orchestrator":{"reasoning_effort":"adaptive"}}}', expect=2)
+
     def test_parent_directory_alias_cannot_overwrite_config_with_agent(self) -> None:
         self.agents_dir.mkdir(parents=True)
         alias = self.root / "alias"
@@ -140,7 +162,7 @@ class SetupCliTests(unittest.TestCase):
     def test_app_server_capabilities_advertise_but_do_not_confirm_routes(self) -> None:
         models = {
             "gpt-5.6-terra": ["medium", "max"],
-            "gpt-5.6-luna": ["max"],
+            "gpt-5.6-luna": ["medium", "max"],
             "gpt-5.6-sol": ["high"],
         }
         capabilities = self.root / "models.json"

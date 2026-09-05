@@ -27,6 +27,8 @@ The commands emit JSON. Common path overrides are --defaults PATH, --user-config
 
 Resolve emits the effective deep-merged settings. Validate checks the effective settings against the strict schema and supplied capabilities, then emits validation JSON. Apply validates first, detects every generated-file collision before writing anything, atomically writes the selected canonical settings layer and derived Doozo roles, then emits JSON.
 
+Implementation roles may select `reasoning_effort: adaptive`. The helper's `ADAPTIVE_EFFORTS` mapping is authoritative: resolve/validate accept `--task-complexity bounded|complex` and return a concrete route. `--compact` emits execution settings without the duplicated configuration and path records. Apply retains the adaptive policy and generates the bounded route; a complex task uses a supported fresh route without rewriting personal agents. Fixed efforts in existing user/project settings remain unchanged after a plugin update. Show the policy and concrete route separately in setup; never claim that saving a policy switches an active model's reasoning.
+
 Apply accepts --settings-json JSON_OR_PATH and --write-scope user or project. Its default write scope is user. Personal apply derives agents only from defaults and user settings, ignoring project overrides. Project apply includes the project's settings and defaults to the target project's .codex/agents directory. Without settings, apply initializes a missing user layer from bundled defaults unless project scope was selected; otherwise it only regenerates derived role files. Per-task overrides are never persisted.
 
 ## Validate capability claims

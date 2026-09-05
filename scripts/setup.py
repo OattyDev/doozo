@@ -42,6 +42,8 @@ ROLE_NAMES = (
     "browser",
 )
 GENERATED_ROLE_NAMES = ROLE_NAMES[1:]
+ADAPTIVE_ROLES = {"implementer", "complex-implementer"}
+ADAPTIVE_EFFORTS = {"bounded": "medium", "complex": "high"}
 ROLE_KEYS = {"model", "reasoning_effort"}
 PRESETS = {"adaptive", "quality-first", "budget-first"}
 BROWSER_DRIVERS = {"agent-browser", "cua", "playwright"}
@@ -156,7 +158,8 @@ def validate_role(role_name: str, value: Any, path: str, complete: bool) -> None
         require_string(model, f"{path}.model")
     if "reasoning_effort" in role:
         effort = require_string(effort, f"{path}.reasoning_effort")
-        if effort not in REASONING_EFFORTS | {"inherit"}:
+        allowed = REASONING_EFFORTS | {"inherit"} | ({"adaptive"} if role_name in ADAPTIVE_ROLES else set())
+        if effort not in allowed:
             raise SetupError(f"{path}.reasoning_effort is not supported by Doozo")
 
     if complete:
@@ -348,7 +351,7 @@ def normalize_capabilities(value: Optional[dict[str, Any]]) -> Optional[Capabili
 
 
 def route_status(
-    config: dict[str, Any], capabilities: Optional[Capabilities]
+    config: dict[str, Any], capabilities: Optional[Capabilities], task_complexity: str = "bounded"
 ) -> dict[str, dict[str, Any]]:
     if capabilities and capabilities.max_workers is not None:
         configured_workers = config["max_workers"]
@@ -362,11 +365,15 @@ def route_status(
         role = config["roles"][role_name]
         model = role["model"]
         effort = role["reasoning_effort"]
+        policy = "adaptive" if effort == "adaptive" else "fixed"
+        if policy == "adaptive":
+            effort = ADAPTIVE_EFFORTS[task_complexity]
         if model == "inherit":
             statuses[role_name] = {
                 "agent_name": None,
                 "model": model,
                 "reasoning_effort": effort,
+                "reasoning_policy": "inherited",
                 "status": "inherited",
                 "advertised": False,
                 "confirmed": False,
@@ -391,6 +398,7 @@ def route_status(
             "agent_name": None if role_name == "orchestrator" else f"doo-{role_name}",
             "model": model,
             "reasoning_effort": effort,
+            "reasoning_policy": policy,
             "status": status,
             "advertised": advertised,
             # Only the host-owned smoke workflow can turn this into confirmed.
@@ -664,12 +672,12 @@ def resolve(args: argparse.Namespace) -> dict[str, Any]:
         state.defaults, state.user_config, state.project_config, state.invocation
     )
     validate_config(effective, "effective configuration", complete=True)
-    statuses = route_status(effective, state.capabilities)
+    statuses = route_status(effective, state.capabilities, args.task_complexity)
     if args.compact:
         return {
             **{key: effective[key] for key in ("preset", "max_workers", "model_fallback", "browser")},
             "route_status": {
-                role: {key: route[key] for key in ("agent_name", "model", "reasoning_effort", "status", "confirmed")}
+                role: {key: route[key] for key in ("agent_name", "model", "reasoning_effort", "reasoning_policy", "status", "confirmed")}
                 for role, route in statuses.items()
             },
         }
@@ -787,6 +795,7 @@ def parser() -> argparse.ArgumentParser:
         child = commands.add_parser(command)
         add_common_arguments(child)
         child.add_argument("--compact", action="store_true", help="emit execution settings without duplicate configuration or paths")
+        child.add_argument("--task-complexity", choices=tuple(ADAPTIVE_EFFORTS), default="bounded", help="resolve adaptive worker effort for this task without writing settings")
     apply_parser = commands.add_parser("apply")
     add_common_arguments(apply_parser)
     apply_parser.add_argument(

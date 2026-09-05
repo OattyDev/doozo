@@ -18,11 +18,11 @@
     },
     "implementer": {
       "model": "gpt-5.6-luna",
-      "reasoning_effort": "max"
+      "reasoning_effort": "adaptive"
     },
     "complex-implementer": {
       "model": "gpt-5.6-terra",
-      "reasoning_effort": "max"
+      "reasoning_effort": "adaptive"
     },
     "reviewer": {
       "model": "gpt-5.6-sol",
